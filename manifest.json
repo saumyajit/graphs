@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2.0,
+    "id": "ZabbixGraphTreesPro",
+    "name": "Zabbix Graph in Tree View",
+    "author": "Saumyajit Pramanik",
+    "url": "https://www.zabbix.com/",
+    "version": "1.0",
+    "namespace": "ZabbixGraphTrees",
+    "description": "Resource tree & monitoring graph visualization for Zabbix",
+    "actions": {
+        "graphtrees": {
+            "class": "GraphTrees",
+            "view": "graphtrees"
+        },
+        "graphtrees.data": {
+            "class": "GraphTreesData",
+            "layout": "layout.json"
+        }
+    }
+}
