@@ -744,7 +744,7 @@ $treeHtml->addClass('tree-panel');
 // Tree header
 $treeHeader = (new CDiv())
     ->addClass('tree-header')
-    ->addItem(new CTag('h3', true, LanguageManager::t('Resource Tree')))
+    ->addItem(new CTag('h3', true, LanguageManager::t('Host Tree')))
     ->addItem(
         (new CDiv())
             ->addClass('tree-controls')
@@ -767,7 +767,7 @@ $treeSearch = (new CDiv())
     ->addClass('tree-search')
     ->addItem(
         (new CTextBox('tree_search', ''))
-            ->setAttribute('placeholder', LanguageManager::t('Search...'))
+            ->setAttribute('placeholder', LanguageManager::t('Search Host...'))
             ->setAttribute('oninput', 'filterTree(this.value)')
     );
 
@@ -905,7 +905,7 @@ $itemsSearch = (new CDiv())
     ->addClass('multi-select-search')
     ->addItem(
         (new CTextBox('items_search', ''))
-            ->setAttribute('placeholder', LanguageManager::t('Search...'))
+            ->setAttribute('placeholder', LanguageManager::t('Search Items...'))
             ->setAttribute('oninput', 'filterItemsOptions(this.value)')
     );
 $itemsDropdown->addItem($itemsSearch);
