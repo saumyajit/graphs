@@ -61,17 +61,33 @@ class GraphTrees extends CController {
         $timeTo = $this->getInput('time_to', time());
 
         // Get all host groups that contain hosts
-        $hostGroups = [];
-        try {
-            $hostGroups = API::HostGroup()->get([
-                'output' => ['groupid', 'name'],
-                'with_hosts' => true,
-                'sortfield' => 'name',
-                'sortorder' => 'ASC'
-            ]);
-        } catch (\Exception $e) {
-            error_log("GraphTrees: Failed to get host groups - " . $e->getMessage());
-        }
+		$hostGroups = [];
+		try {
+			$hostGroups = API::HostGroup()->get([
+				'output' => ['groupid', 'name'],
+				'with_hosts' => true,
+				'sortfield' => 'name',
+				'sortorder' => 'ASC'
+			]);
+		
+			// Filter groups that start with CUSTOMER/ or PRODUCT/
+			$allowedPrefixes = ['CUSTOMER/', 'PRODUCT/'];
+		
+			$hostGroups = array_filter($hostGroups, function($group) use ($allowedPrefixes) {
+				foreach ($allowedPrefixes as $prefix) {
+					if (strpos($group['name'], $prefix) === 0) {
+						return true;
+					}
+				}
+				return false;
+			});
+		
+			// Make sure indexes are numeric for foreach
+			$hostGroups = array_values($hostGroups);
+		
+		} catch (\Exception $e) {
+			error_log("GraphTrees: Failed to get host groups - " . $e->getMessage());
+		}
 
         // Build host group → host tree structure
         $treeData = [];
