@@ -41,10 +41,10 @@ This is a frontend module for Zabbix that provides tree-structured browsing of m
 
 ```bash
 # Zabbix 6.0 / 7.0 deployment method
-git clone https://github.com/X-Mars/zabbix_modules.git /usr/share/zabbix/modules/
+git clone https://github.com/saumyajit/graphs.git /usr/share/zabbix/modules/
 
 # Zabbix 7.4 deployment method
-git clone https://github.com/X-Mars/zabbix_modules.git /usr/share/zabbix/ui/modules/
+git clone https://github.com/saumyajit/graphs.git /usr/share/zabbix/ui/modules/
 ```
 
 ### ⚠️ Modify manifest.json File
