@@ -71,7 +71,8 @@ class GraphTrees extends CController {
 			]);
 		
 			// Filter groups that start with CUSTOMER/ or PRODUCT/
-			$allowedPrefixes = ['CUSTOMER/', 'PRODUCT/'];
+			// $allowedPrefixes = ['CUSTOMER/', 'PRODUCT/'];
+			$allowedPrefixes = ['CUSTOMER/'];
 		
 			$hostGroups = array_filter($hostGroups, function($group) use ($allowedPrefixes) {
 				foreach ($allowedPrefixes as $prefix) {
