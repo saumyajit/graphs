@@ -1796,9 +1796,22 @@ function renderGraphs() {
                     var card = document.createElement("div");
                     card.className = "graph-card";
                     
+                    // Determine graph type and get appropriate icon
+                    var graphType = detectGraphType(graphData.name, graphData.type);
+                    var iconInfo = getGraphIcon(graphType);
+                    
                     // Create chart header container
                     var header = document.createElement("div");
                     header.className = "graph-header";
+                    
+                    // Add icon element
+                    var iconElement = document.createElement("span");
+                    iconElement.className = "graph-icon";
+                    iconElement.innerHTML = iconInfo.icon;
+                    iconElement.style.color = iconInfo.color;
+					iconElement.style.marginRight = "8px";
+                    iconElement.title = iconInfo.label;
+                    header.appendChild(iconElement);
                     
                     var title = document.createElement("div");
                     title.className = "graph-title";
@@ -1842,6 +1855,69 @@ function renderGraphs() {
             container.innerHTML = '<div class="empty-state"><div>' + graphTreesConfig.i18n.failedToLoad + '</div></div>';
         });
 }
+
+// Helper function to detect graph type from name or type property
+function detectGraphType(graphName, graphType) {
+    var name = (graphName || "").toLowerCase();
+    var type = (graphType || "").toLowerCase();
+    
+    // Check explicit type first
+    if (type) {
+        if (type.includes("cpu") || type.includes("processor")) return "cpu";
+        if (type.includes("memory") || type.includes("ram")) return "memory";
+        if (type.includes("disk") || type.includes("storage")) return "disk";
+        if (type.includes("service")) return "service";
+        if (type.includes("url") || type.includes("http") || type.includes("web")) return "url";
+    }
+    
+    // Fall back to name detection
+    if (name.includes("cpu") || name.includes("processor")) return "cpu";
+    if (name.includes("memory") || name.includes("ram") || name.includes("mem")) return "memory";
+    if (name.includes("disk") || name.includes("storage") || name.includes("hdd") || name.includes("ssd")) return "disk";
+    if (name.includes("service") || name.includes("process")) return "service";
+    if (name.includes("url") || name.includes("http") || name.includes("web") || name.includes("ping")) return "url";
+    
+    return "default";
+}
+
+// Using Font Awesome (requires Font Awesome to be loaded)
+function getGraphIcon(type) {
+    var icons = {
+        "cpu": {
+            icon: '<i class="fas fa-microchip"></i>',
+            color: "#3498db",
+            label: "CPU"
+        },
+        "memory": {
+            icon: '<i class="fas fa-memory"></i>',
+            color: "#9b59b6",
+            label: "Memory"
+        },
+        "disk": {
+            icon: '<i class="fas fa-hdd"></i>',
+            color: "#d62b11",
+            label: "Disk"
+        },
+        "service": {
+            icon: '<i class="fas fa-cogs"></i>',
+            color: "#2ecc71",
+            label: "Service"
+        },
+        "url": {
+            icon: '<i class="fas fa-globe"></i>',
+            color: "#e74c3c",
+            label: "URL"
+        },
+        "default": {
+            icon: '<i class="fas fa-chart-line"></i>',
+            color: "#95a5a6",
+            label: "Graph"
+        }
+    };
+    
+    return icons[type] || icons["default"];
+}
+
 
 function drawLineChart(container, data, units, requestedTimeFrom, requestedTimeTo, isModal) {
     if (!data || data.length === 0) return;
