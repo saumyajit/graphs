@@ -5,7 +5,8 @@ require_once dirname(__DIR__) . '/lib/ViewRenderer.php';
 use Modules\ZabbixGraphTrees\Lib\LanguageManager;
 use Modules\ZabbixGraphTrees\Lib\ViewRenderer;
 
-$pageTitle = $data['title'] ?? LanguageManager::t('Graph Trees');
+// $pageTitle = $data['title'] ?? LanguageManager::t('Graph Trees');
+$pageTitle = [];
 
 // Predefine time variables for later use
 $currentTimeFrom = (int)($data['time_from'] ?? time() - 3600);
@@ -13,9 +14,11 @@ $currentTimeTo = (int)($data['time_to'] ?? time());
 
 // Add CSS styles
 $styleTag = new CTag('style', true, '
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
+
 .graphtrees-container {
     display: flex;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 100px);
     padding: 0;
     margin: 0;
     gap: 0;
@@ -31,15 +34,16 @@ $styleTag = new CTag('style', true, '
 }
 
 .tree-header {
-    padding: 10px 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #007bff;
+    padding: 20px;
+    border-bottom: 1px solid #e1e4e8;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
 }
 
 .tree-header h3 {
     margin: 0;
     font-size: 16px;
-    color: #495057;
+    color: white;
 }
 
 .tree-controls {
@@ -49,10 +53,15 @@ $styleTag = new CTag('style', true, '
 }
 
 .tree-controls button {
+    flex: 1;
+    padding: 1px 2px;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
     font-size: 12px;
-    padding: 8px 12px;
-    height: 32px;
-    line-height: 1;
+    transition: all 0.2s;
 }
 
 .tree-search {
@@ -760,6 +769,7 @@ $treeHeader = (new CDiv())
             )
     );
 
+
 $treeHtml->addItem($treeHeader);
 
 // Search box
@@ -844,7 +854,7 @@ $contentHeader = (new CDiv())->addClass('content-header');
 
 $contentTitle = (new CDiv())
     ->addClass('content-title')
-    ->addItem(LanguageManager::t('Monitoring Graphs'));
+    ->addItem(LanguageManager::t('📊 Monitoring Graphs'));
 
 $contentHeader->addItem($contentTitle);
 
